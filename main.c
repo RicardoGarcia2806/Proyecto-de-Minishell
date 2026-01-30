@@ -1,76 +1,46 @@
+//Integrantes: 
+//Ricardo Garcia, carnet: 20-10274
+//Brian Orta, carnet: 21-10447
+
+//aqui se definen las bibliotecas usadas en el proyecto
 #include <stdio.h>
-//declaracion del prototipo
-int max(int num1, int num2);
+#include <string.h>
+#include <stdlib.h>
 
-//declaracion de la funcion
-int max(int num1, int num2){
-  if (num1 >= num2){
-    return num1;
-  } else {
-    return num2;
+//Aqui se define la funcion para tokenizar los elementos de la cadena que pasara el usuario 
+//esto ayuda a separar el comando de las flags, es especialmente util si quiero utilizar (o no) flags
+
+//defino el numero maximo de tokens que puede descomponer el minishell
+
+#define MAX_TOKENS 100
+
+//tokenize es una funcion que, a grandes rasgos, va a descomponer el argumento pasado por el usuario en subcadenas
+// (los llamados tokens)
+
+char **tokenize(char *line){
+  //definicion de las variables
+  char **tokens = malloc(MAX_TOKENS * sizeof(char *));
+  char *token;
+  int i = 0;
+  
+  //aqui se crea el primer token (el comando, basicamente)
+  token = strtok(line, "t\n\r");
+  while (token != NULL && i < MAX_TOKENS - 1){
+    tokens[i] = token; 
+    i++;
+
+    //en esta parte se crean los tokens que faltan 
+    token = strtok(NULL, "t\n\r");
   }
-};
+  //como token final del arreglo de tokens agrego un elemento null
+  tokens[i] = NULL; 
+  return tokens;
+}
 
+
+
+//Aqui se define la funcion principal
 int main(){
-  // declaracion de variables
-  int number;
-  int pair_counting;
-  int even_counting;
-  int pasos;
-  int max_value;
-  int new_number;
-
-  // Para empezar, se solicita al usuario un entero positivo
-  printf("%s\n", "Por favor, ingrese un entero positivo:");
-  scanf("%d", &number);
-
-  //Se requiere verificar que el numero sea mayor que cero, en caso contrario devolveremos un error
-  if (number % 2 == 0){
-    printf("%s", "Error: El numero no es un entero positivo"); 
-  };
-
-  //estos contadores sirven para contar cuantas veces el numero fue par o impar. y para contar el numero de pasos
-  pair_counting = 0;
-  even_counting = 0;
-  pasos = 0;
-
-  // Este bucle ejecuta la conjetura de Collatz y se detiene cuando el numero llega a 1
-  while (number != 1){
-
-    //Si el numero es par, se divide entre dos
-    if(number % 2 == 0){
-      number = number / 2;
-      pair_counting++;
-      printf("%d\n", number);
-
-      //aqui calculamos el maximo
-      //max_value = max(number, new_number);
-
-    } else {
-      //si el numero es impar, se multiplica por tres y se le suma 1
-      number = 3*number + 1;
-      even_counting++;
-      printf("%d\n", number);
-      //max_value = max(number, new_number);
-    }
-  }
-
-  //En este bloque de codigo, se imprimen el numero de veces que el numero fue par o impar
-  printf("%s", "Cantidad de veces que el numero fue par: ");
-  printf("%d\n", pair_counting);
-
-  printf("%s", "Cantidad de veces que el numero fue impar: ");
-  printf("%d\n", even_counting);
-
-  //calculo el numero de pasos, que no es mas que la suma de veces en que el numero fue par mas 
-  // el numero de veces que el numero fue impar
-
-  pasos = even_counting + pair_counting;
-  printf("%s", "Numero de pasos: ");
-  printf("%d\n", pasos);
-
-  //valor maximo
-  printf("%s", "Valor maximo: ");
-  printf("%d\n", max);
+  
   return 0;
-};
+}
