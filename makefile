@@ -4,9 +4,9 @@
 # 	instrucciones
 
 main.o: main.c
-	gcc -o main main.c
-	./main
+	gcc -o minish main.c
+	./minish
 
 clean: 
 	rm -f *.o
-	rm -f main
+	rm -f minish
