@@ -4,7 +4,7 @@
 # 	instrucciones
 
 main.o: main.c
-	gcc -o minish main.c
+	gcc -o minish main.c builtins.c tokenize.c
 	./minish
 
 clean: 
